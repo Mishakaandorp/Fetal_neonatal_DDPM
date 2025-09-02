@@ -9,7 +9,7 @@ The GIF below shows modified pathological label maps derived from healthy labels
 
 ![image34](https://github.com/user-attachments/assets/d2542b7e-e849-4f06-a2c4-c1e908f5c7ac)
 
-This framework builds upon the Med-DDPM framework described by [Dorjsembe et al. (2024)](https://arxiv.org/abs/2305.18453), with code available on [Med-DDPM GitHub](https://github.com/mobaidoctor/med-ddpm)
+This framework builds upon the Med-DDPM framework described by [Dorjsembe et al. (2024)](https://arxiv.org/abs/2305.18453), with code available on [Med-DDPM GitHub](https://github.com/mobaidoctor/med-ddpm).
 
 This project was supported by the Swiss National Science Foundation (SNSF), grant Nr. IZKSZ3_218590.
 
@@ -28,12 +28,12 @@ We have provided example images of the [FeTA2021](https://feta.grand-challenge.o
 Running ``` /scripts/synthetic_label_map_generation_pipeline_example.sh ``` does the following:
 - Generate pathological label augmentations on the provided (healthy) label image.
 - Relabel and resize to image dimensions 160x160x160 for Fetal/Neonatal MRI synthesis.
-- Generate MRI images utilizing Fetal&Neonatal-DDPM, the trained model (See model weights below)
-- Upsample and upscale to original dimensions.
+- Generate MRI images utilizing Fetal&Neonatal-DDPM, the trained model (See model weights below).
+- Upsample and upscale to original dimensions (Note: it needs to have the original MRI to know the scaling factor).
 
 ### 🚀 Generate your own synthetic fetal and neonatal MRIs
 
-You can add your own label images to ``` /Dataset/... ```
+You can add your own label images and MRIs to ``` /Dataset/... ```.
 Change the dataset in ``` /scripts/synthetic_label_map_generation_pipeline_example.sh ``` and run the pipeline. 
 
 ### 🧠 Model Weights
@@ -60,6 +60,7 @@ Gratitude to these repositories:
 1. [denoising-diffusion-pytorch](https://github.com/lucidrains/denoising-diffusion-pytorch)
 2. [guided-diffusion](https://github.com/openai/guided-diffusion)
 3. [med-ddpm](https://github.com/mobaidoctor/med-ddpm)
+
 
 
 
