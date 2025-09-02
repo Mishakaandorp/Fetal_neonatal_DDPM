@@ -59,6 +59,7 @@ Gratitude to these repositories:
 
 1. [denoising-diffusion-pytorch](https://github.com/lucidrains/denoising-diffusion-pytorch)
 2. [guided-diffusion](https://github.com/openai/guided-diffusion)
-3. [med-ddpm](https://github.com/mobaidoctor/med-ddpm/edit/main/README.md)
+3. [med-ddpm](https://github.com/mobaidoctor/med-ddpm)
+
 
 
