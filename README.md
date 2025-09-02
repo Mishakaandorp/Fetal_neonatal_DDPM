@@ -1,5 +1,5 @@
 # Fetal&Neonatal-DDPM
-This repository contains the code for our Fetal&Neonatal-DDPM, a diffusion model for 3D pathological fetal and neonatal brain MRI synthesis from 3D segmentation maps.
+This repository contains the code for our Fetal&Neonatal-DDPM, a diffusion model for 3D pathological fetal and neonatal brain MRI synthesis from 3D segmentation maps. It also includes pretrained model weights and a label manipulation script that generates pathological labels from healthy labels.
 
 The work focuses on improving segmentation of pathological regions in fetal and neonatal brain MRI by synthesizing pathological training data from healthy scans. This approach addresses the limited availability of annotated pathological data by leveraging generative methods for data augmentation.
 
@@ -22,3 +22,4 @@ In the meantime, you can refer to the preprint version of the manuscript on arXi
 # Contact
 For questions, please contact:
 📧 Misha.Kaandorp@kispi.uzh.ch
+
