@@ -1,5 +1,6 @@
 # Fetal&Neonatal-DDPM
 [[Preprint on ArXiv](https://arxiv.org/abs/2501.19338)]
+
 This repository contains the code for our Fetal&Neonatal-DDPM, a diffusion model for 3D pathological fetal and neonatal brain MRI synthesis from 3D segmentation maps. It also includes pretrained model weights and a label manipulation script that generates pathological labels from healthy labels.
 
 The work focuses on improving segmentation of pathological regions in fetal and neonatal brain MRI by synthesizing pathological training data from healthy scans. This approach addresses the limited availability of annotated pathological data by leveraging generative methods for data augmentation.
@@ -59,4 +60,5 @@ Gratitude to these repositories:
 1. [denoising-diffusion-pytorch](https://github.com/lucidrains/denoising-diffusion-pytorch)
 2. [guided-diffusion](https://github.com/openai/guided-diffusion)
 3. [med-ddpm](https://github.com/mobaidoctor/med-ddpm/edit/main/README.md)
+
 
