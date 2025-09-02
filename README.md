@@ -10,7 +10,15 @@ The Giff below shows modified pathological label maps derived from healthy label
 
 This project was supported by the Swiss National Science Foundation (SNSF), grant Nr. IZKSZ3_218590.
 
-# ⚠️ Under Development
+## 🛠️ Setup 
+
+Ensure you have the following libraries installed for training and generating images using python 3.8:
+
+c3d Version 1.1.0
+
+pip install -r requirements.txt
+
+## 🚀 Run on Your Own Dataset
 
 The code is currently under development and will be publicly released upon publication of our manuscript:
 "Pathological MRI Segmentation by Synthetic Pathological Data Generation in Fetuses and Neonates" (under review).
@@ -22,4 +30,5 @@ In the meantime, you can refer to the preprint version of the manuscript on arXi
 # Contact
 For questions, please contact:
 📧 Misha.Kaandorp@kispi.uzh.ch
+
 
