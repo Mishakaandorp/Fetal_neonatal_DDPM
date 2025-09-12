@@ -1,23 +1,15 @@
 #!/bin/bash
 
 # # Define directories and file paths
-# Dataset='dHCP_fetal'
-# L7label_BASE="/media/m-ssd4/Misha/Project_synthetic_brain/Datasets/All_masks/dHCP_fetal_label_KISPI_good_randomvalues_fixed_20"
-# T2_BASE="/media/m-ssd4/Misha/Project_synthetic_brain/Datasets/All_data/dHCP_fetal_label_KISPI_good_randomvalues_fixed_20" #optionally also copy
-# L91label_BASE="/media/m-ssd4/Misha/Project_synthetic_brain/Datasets/All_masks/dHCP_fetal_label_KISPI_91labels" #optionally also copy
-
-# L7label_BASE="/media/m-ssd4/Misha/Project_synthetic_brain/Datasets/All_masks/dHCP_fetal_label_KISPI_good_randomvalues_fixed_20"
-# T2_BASE="/media/m-ssd4/Misha/Project_synthetic_brain/Datasets/All_data/dHCP_fetal_label_KISPI_good_randomvalues_fixed_20" #optionally also copy
-# L91label_BASE="/media/m-ssd4/Misha/Project_synthetic_brain/Datasets/All_masks/dHCP_fetal_label_KISPI_91labels" #optionally also copy
-
+# Change "Dataset" with your own dataset
+# Remember to include both 'mri' and 'label'
 Dataset='Example_fetal_labels'
 L7label_BASE="/media/m-ssd4/Misha/Project_synthetic_brain/Datasets/Paper_code/Dataset/$Dataset/label"
-T2_BASE="/media/m-ssd4/Misha/Project_synthetic_brain/Datasets/Paper_code/Dataset/$Dataset/mri" #optionally also copy
-
+T2_BASE="/media/m-ssd4/Misha/Project_synthetic_brain/Datasets/Paper_code/Dataset/$Dataset/mri" #optionally
+SYNH_files_PER_SUB=2 # Defining number of synthetic files
+# Which pathologies to synthetisize
 Synthesize_pathology='noPNH' # 'ventriculomegaly' 'all_pathologies' 'noPNH' 'cortical_thickness'
-SYNH_files_PER_SUB=2
 save_files_name='synthesize_'$Synthesize_pathology'_'$SYNH_files_PER_SUB'_persub'
-# save_files_name='synthesisze_dHCPneonates_cortical_thickening'
 OUTPUTDIR="../manipulated_labels/$Dataset/$save_files_name/labels_per_subject/"
 JSON_OUTPUTDIR="../manipulated_labels/$Dataset/$save_files_name/json_files/"
 FINAL_IM_OUTPUTDIR="../manipulated_labels/$Dataset/$save_files_name/all_final_labels/"
@@ -33,7 +25,6 @@ create_json_files() {
     local num_files=$2
     local Synthesize_pathology=$3
     
-
     echo "splitting hemis and ventricles for individual hemisphere ventriculomegaly processing..."
     python3 seperate_hemispheres_example.py \
         --subject "$patient_id" \
@@ -46,7 +37,6 @@ create_json_files() {
         --outputdir "$OUTPUTDIR" \
         --outputdir_json_files "$JSON_OUTPUTDIR" \
         --synthesize_pathology "$Synthesize_pathology" 
-
 }
 
 copy_files() {
@@ -83,18 +73,6 @@ copy_files() {
     else
         echo "No file found starting with '$patient_id' in '$TARGET_DIR_7label'."
     fi
-
-    # # Find the first file that starts with the specified variable name
-    # file_91label=$(find "$TARGET_DIR_91label" -maxdepth 1 -type f -name "${patient_id}*")
-    # # Check if a file was found
-    # if [[ -n "$file_91label" ]]; then
-    #     # Extract the whole filename
-    #     filename=$(basename "$file_91label")
-    #     echo "Found file: $filename"
-    #     cp "${TARGET_DIR_91label}/${filename}" "${output_dir}/${patient_id}_91label_orig.nii.gz"
-    # else
-    #     echo "No file found starting with '$patient_id' in '$TARGET_DIR_91label'."
-    # fi
 }
 
 
@@ -202,8 +180,6 @@ EOF
     # Apply transformation
     echo "DOOOO flirt label image"
     flirt -in "$input_segmentation_dir" -ref "$input_segmentation_dir" -out "${output_segmentation_scale}" -applyxfm -init "$matrix_file" -paddingsize 0.0 -interp nearestneighbour
-    # echo sleep_60
-    # sleep 60
     echo "Applying transformations..."
     echo "Shrinking brainstem..."
 
@@ -314,8 +290,6 @@ for json_file in $JSON_OUTPUTDIR/*.json; do
     microcephaly=$(cat $json_file | sed -n 's/^[[:space:]]*"microcephaly": \([^,]*\),/\1/p' | sed ':a;N;$!ba;s/\n//g' | sed 's/[^[:print:]]//g')
     pnh=$(cat $json_file | sed -n 's/^[[:space:]]*"pnh": \([^,]*\),/\1/p' | sed ':a;N;$!ba;s/\n//g' | sed 's/[^[:print:]]//g')
     synthetic_file=$(cat $json_file | sed -n 's/^[[:space:]]*"synthetic_file": \([^,]*\),/\1/p' | sed ':a;N;$!ba;s/\n//g' | sed 's/[^[:print:]]//g')
-    # sleep 30
-
 
     # Print extracted information
     echo ""
@@ -457,13 +431,17 @@ python preprocess_labels_for_image_synthesis.py \
 echo "Labels manipulated for image synthesis "
 
 mkdir -p "../../generated_MRIs/160_space/$Dataset/$save_files_name/"
+
 cd ../Fetal_Neonatal_DDPM/scripts/
+echo "Current working directory: $(pwd)"
+
 python3 ../sample.py --inputfolder "../../preprocessing_manipulated_labels/$Dataset/$save_files_name/label_160_space/" --exportfolder "../../generated_MRIs/160_space/$Dataset/$save_files_name/" --fix_seed --input_size 160 --depth_size 160 --num_channels 64 --num_res_blocks 1 --batchsize 1 --num_samples 1 --num_class_labels 4 --timesteps 1000 --weightfile "../Trained_models/Fetal_Neonatal_DDPM_500kepochs/model-500.pt"  
 
 cd ../../scripts/
 
 echo "upscaling MRIs to original space .."
 
+# Note - this only works of the MRI is available..
 python resize_rescale_synthetic_image_to_original_shape.py \
     --base_dataset "$Dataset" \
     --synthesize_option "$save_files_name" \
