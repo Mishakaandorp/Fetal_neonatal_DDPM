@@ -435,7 +435,7 @@ mkdir -p "../../generated_MRIs/160_space/$Dataset/$save_files_name/"
 cd ../Fetal_Neonatal_DDPM/scripts/
 echo "Current working directory: $(pwd)"
 
-python3 ../sample.py --inputfolder "../../preprocessing_manipulated_labels/$Dataset/$save_files_name/label_160_space/" --exportfolder "../../generated_MRIs/160_space/$Dataset/$save_files_name/" --fix_seed --input_size 160 --depth_size 160 --num_channels 64 --num_res_blocks 1 --batchsize 1 --num_samples 1 --num_class_labels 4 --timesteps 1000 --weightfile "../Trained_models/Fetal_Neonatal_DDPM_500kepochs/model-500.pt"  
+python3 ../sample.py --inputfolder "../../preprocessing_manipulated_labels/$Dataset/$save_files_name/label_160_space/" --exportfolder "../../generated_MRIs/160_space/$Dataset/$save_files_name/" --fix_seed --input_size 160 --depth_size 160 --num_channels 64 --num_res_blocks 1 --batchsize 1 --num_samples 1 --num_class_labels 4 --timesteps 1000 --weightfile "../Trained_models/Fetal_Neonatal_DDPM_500kepochs.pt"  
 
 cd ../../scripts/
 
